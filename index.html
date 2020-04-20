@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./styles.css">
+  <title>doc_page</title>
+</head>
+<body>
+<div class="container">
+  <nav id="navbar">
+    <header style="text-decoration: none;">DEBUGGIN<span style="color: aqua;">G</span> WITH <span style="color: white; background-color: blue; border-radius: 5px;">JS</span></header>
+    <a class="nav-link" href="#INTRODUCTION">INTRODUCTION</a>
+    <a class="nav-link" href="#DEBUGGING_WORKFLOW">DEBUGGING WORKFLOW</a>
+    <a class="nav-link" href="#THE_CONSOLE">THE CONSOLE</a>
+    <a class="nav-link" href="#BREAKPOINTS">BREAKPOINTS</a>
+    <a class="nav-link" href="#CONDITIONAL_BREAKPOINTS">CONDITIONAL BREAKPOINTS</a>
+    <a href="#" style="background-color: white; display: block;">&nbsp;</a>
+  </nav>
+  <main id="main-doc">
+    <section class="main-section" id="INTRODUCTION">
+      <header>INTRODUCTION</header>
+      <p>As a programmer, you’ll spend most of your time looking for errant code. It is therefore important to have a well-defined approach to tackle such an issue when it arises. This 7 min read is an excerpt from Error Handling and Debugging from JavaScript & jQuery Interactive Front-End Web Development by Jon Duckett.</p>
+      <h2>SCOPE</h2>
+      <p>
+        This excerpt covers debugging and error handling in JS.
+        Content: Execution context, types of errors, debugging workflow, console object, breakpoints and exception handling.
+      </p>
+      <h2>ERROR HANDLING AND DEBUGGING IN JAVASCRIPT</h2>
+      <p>
+        JavaScript uses a concept called execution context. They include:
+        Global Context: Any code outside a function. Covers the whole page.
+        Function Context: Any code residing inside a function.
+        Eval Context
+      </p>
+      <p>
+        Whenever you interdivter comes across an error in your code, it'll throw an exception.
+        It'll check the current execution context for an exception handling code, then it'll move higher up the stack.
+        If it reaches the global context and doesn't find an exception handler, it throws an error object.
+        The error object will help you identify where the error is.
+      </p>
+      <p>7 Types of built in error objects in JS:</p>
+      <ol>
+        <li>
+          Error: all other errors are based upon this. Is a template from which all other errors are created.
+        </li>
+        <li>
+          Reference Error: an undeclared variable has been referenced.
+        </li>
+        <li>
+          Type Error: unexpected data type that cannot be coerced.
+        </li>
+        <li>
+          Range Error: Numbers not in acceptable range.
+        </li>
+        <li>
+          URI Error: <code>encodeURI()</code>, <code>decodeURI()</code>, and similar methods not used correctly.
+        </li>
+        <li>
+          EvalError: <code>eval()</code> function used incorrectly.
+        </li>
+        <li>
+          isNaN: performing mathematical operations with strings.
+        </li>
+      </ol>
+      <details>
+        <summary>Handling errors:</summary>
+        <p style="color:red;">
+          Use try, catch, throw, finally statements.
+          Debugging is about deduction: eliminating potential causes of an error.
+        </p>
+      </details>
+    </section>
+
+    <section class="main-section" id="DEBUGGING_WORKFLOW">
+      <header>DEBUGGING WORKFLOW</header>
+      <p>Narrowing down to the problematic area</p>
+      <ol>
+        <li>
+          Look at the error message:(browser dev tools):
+          It'll tell you:
+          <ul>
+            <li>The relevant script that caused the problem.</li>
+            <li>
+              The line number where it became a problem for the interdivter. (note that this is the point from which script execution could not continue and not necessarily the cause of the error).
+            </li>
+            <li>The type of error (the underlying cause may be different).</li>
+          </ul>
+        </li>
+        <li>
+           Check how far the script is running. Use tools to write messages to the console to tell how far your script has executed.
+        </li>
+        <li>
+           Use breakpoints where things are going wrong. They let you pause execution and inspect the values that are stored in variables.
+        </li>
+        <br>
+        <p>
+          If you are stuck on an error, describe the situation to another programmer. Explain what should be happening and where the error appears to be happening. If nobody else is available, try describing it to yourself.
+        </p>
+        <p>
+          When you are debugging errors, it can be of help if you look at the error in more than one browser as they can show different error messages.
+        </p>
+      </ol>
+    </section>
+
+    <section class="main-section" id="THE_CONSOLE">
+      <header>THE CONSOLE</header>
+      <p>
+        Browsers that have a console have a console object. Which has several methods your script can use to display data to the console.
+      </p>
+      <h2>CONSOLE METHODS</h2>
+        <div class="code">
+          <pre>
+            <code>
+            console.log();
+            /*From here you'll notice that these methods have different colors and icons to distinguish them:*/
+            console.info();
+            console.warn();
+            console.error();
+           </code>
+         </pre>
+       </div>
+      <h3>GROUPING MESSAGES:</h3>
+      <p>
+        When writing a set of related messages to the console, use <code>console.group();</code>
+        This allows you to expand and contract the results.
+        It has one parameter, the name that you want to use identifying the grouped messages.
+      </p>
+<div class="code">
+  <pre>
+    <code>
+        console.group('Area calculations');
+        console.info('Width ', width);
+        console.info('Height ', height);
+        console.log(area);
+        console.groupEnd();
+    </code>
+  </pre>
+</div>
+      <h3>WRITING TABULAR DATA</h3>
+<div class="code">
+  <pre>
+    <code>
+      var contacts={
+        "London":{
+          "Tel":"+44 (0)207 946 0128",
+          "Country": "UK"},
+          "Sydney":{
+            "Tel": "+61 (0)2 7010 1212",
+            "Country": "Australia"},
+            "New York":{
+              "Tel": "+1 (0)1 555 2104",
+              "Country": "USA"}
+            }
+
+            console.table(contacts);
+    </code>
+  </pre>
+</div>
+      <h3>WRITING ON A CONDITION</h3>
+      <code>console.assert();</code>
+      <p>Tests if a condition is met, only writes to console when the condition evaluates to false.</p>
+<div class="code">
+  <pre>
+    <code>
+      var test_one=9;
+      var_test_two="nine";
+      console.assert($.isNumeric(test_two), 'This variable does not contain an integer');
+    </code>
+  </pre>
+</div>
+    </section>
+
+    <section class="main-section" id="BREAKPOINTS">
+      <header>BREAKPOINTS</header>
+      <p>You can pause the execution of a script on any line using breakpoints. Then you can check the values stored in variables at that point in time.</p>
+      <h2>CHROME</h2>
+        <ul>
+          <li>Select Sources option</li>
+          <li>Select the script you are working.</li>
+          <li>Find the line number you want to stop on and click on it.</li>
+          <li>When you run the script, it'll stop on this line.</li>
+          <li>You can now hover over any variable to see its value at that time in the script's execution.</li>
+        </ul>
+      <h2>FIREFOX</h2>
+      <ul>
+        <li>Select the Debugger option.</li>
+        <li>Select the script you are working with.</li>
+        <li>Find the line number you want to stop on and click on it.</li>
+        <li>When you run the script, it'll stop on this line, you can now hover over any variable to see its value at that time in the script's execution.</li>
+      </ul>
+      <br>
+      <p>
+        If you set multiple breakpoints, you can step through them one-by-one to see where values change and a problem can occur.
+        When you set breakpoints, the debugger lets you step through the code line by line and see the values of variables as your script progresses.
+        When you are doing this, if the debugger comes across a function, it'll move onto the next line after the function. (It doesn't move to where the function is defined).
+        This behavior is called stepping over.
+        It is possible to tell the debugger to step into a function to see what is happening inside the function.
+      </p>
+      <p>buttons:</p>
+      <ul>
+        <li>pause</li>
+        <li>play</li>
+        <li>step through: go to the next lines one-by-one.</li>
+        <li>step into: a function call. The debugger will move to the first line in that function.</li>
+        <li>step out: of a function that you stepped into.</li>
+      </ul>
+    </section>
+
+    <section class="main-section" id="CONDITIONAL_BREAKPOINTS">
+      <header>CONDITIONAL BREAKPOINTS</header>
+      <p>
+        You can indicate that a breakpoint should be triggered only if a condition that you specify is met. The condition can use existing variables.
+      </p>
+      <h2>CHROME</h2>
+      <ul>
+        <li>Right-click on a line number</li>
+        <li>Select Add Conditional Breakpoint</li>
+        <li>Enter a condition into the popup box</li>
+        <li>When you run the script, it'll only stop on this line if the condition is true</li>
+      </ul>
+      <h2>FIREFOX</h2>
+      <ul>
+        <li>Right-click on a line of code</li>
+        <li>Select Add Conditional breakpoint</li>
+        <li>Enter a condition into the popup box</li>
+        <li>When you run the script, it'll stop in this line only if the condition is true</li>
+      </ul>
+      <h2>DEBUGGER KEYWORD</h2>
+      <p>
+        You can create a breakpoint in your code using just the debugger keyword.
+        When the developer tools are open, this will automatically create a breakpoint.
+        You can also place the debugger keyword within a conditional statement so that it only triggers the breakpoint if the condition is met.
+        It is particularly important to remember to remove these statements before your code goes live as this could stop the page running if a user has developer tools open.
+      </p>
+      <p class="tip">
+        TIP: If you have a development server, your debugging code can be placed in conditional statements that checks whether it is running on a specific server (and the debugging code only runs if it is on the specified server).
+      </p>
+      <h2>HANDLING EXCEPTIONS</h2>
+<div class="code">
+  <pre>
+    <code>
+      try {
+        //Try to execute this code
+      } catch (exception) {
+        //If there is an exception, run this code
+      } finally {
+        //This always gets executed
+      }
+    </code>
+  </pre>
+</div>
+      <p>If you use a continue, break, or return keyword inside a try, it will go to the finally option.</p>
+      <h2>THROWING ERRORS</h2>
+      <p>If you know something might cause a problem in your script, you can generate your own errors before the interdivter creates them.</p>
+            <code>
+              <div>throw new Error('message');</div>
+            </code>
+      <p>This creates a new Error object using the default Error object.</p>
+      <h3>CLOSING REMARKS</h3>
+      <p>Debugging is a learning opportunity for developers, you might as well enjoy it!</p>
+    </section>
+  </main>
+  <footer id="footer">
+    <ul>
+      <li>&copy;devinsky 2020.</li>
+      <li>All rights reserved.</li>
+    </ul>
+  </footer>
+</div>
+</body>
+<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</html>
